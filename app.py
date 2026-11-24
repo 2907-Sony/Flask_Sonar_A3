@@ -7,11 +7,21 @@ Routes:
 
 
 # Importing required libs
+import os
+import secrets
+
 from flask import Flask, render_template, request
+from flask_wtf.csrf import CSRFProtect
+
 from model import preprocess_img, predict_result
 
 # Instantiating flask app
 app = Flask(__name__)
+# Secret key signs the CSRF tokens. It is read from the environment in
+# production and falls back to a random value for local runs and tests.
+app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", secrets.token_hex(32))
+# Enable CSRF protection for every state-changing (POST) request
+csrf = CSRFProtect(app)
 
 
 # Home route

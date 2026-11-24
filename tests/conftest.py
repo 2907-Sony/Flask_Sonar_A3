@@ -15,8 +15,12 @@ SAMPLE_IMAGE = os.path.join(PROJECT_ROOT, "test_images", "3", "Sign 3 (122).jpeg
 def client():
     """Give each test a Flask test client that sends fake browser requests."""
     flask_app.config["TESTING"] = True
+    # CSRF is tested separately in test_security.py; disable it here so the
+    # functional tests can post forms without a token.
+    flask_app.config["WTF_CSRF_ENABLED"] = False
     with flask_app.test_client() as test_client:
         yield test_client
+    flask_app.config["WTF_CSRF_ENABLED"] = True
 
 
 @pytest.fixture

@@ -15,12 +15,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803  # v6
         with:
           fetch-depth: 0   # full history so SonarQube can detect new code and blame lines
 
       - name: Set up Python 3.10
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1  # v6
         with:
           python-version: "3.10"   # TensorFlow 2.10 requires Python 3.10
           cache: pip
@@ -34,6 +34,6 @@ jobs:
         run: pytest --cov=. --cov-report=xml:coverage.xml --cov-report=term
 
       - name: SonarQube Cloud scan
-        uses: SonarSource/sonarqube-scan-action@v6
+        uses: SonarSource/sonarqube-scan-action@fd88b7d7ccbaefd23d8f36f73b59db7a3d246602  # v6
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
